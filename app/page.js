@@ -4,6 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import { supabase } from "./lib/supabase";
+
 import StartScreen from "./components/StartScreen";
 import QuestionScreen from "./components/QuestionScreen";
 import questions from "./data/question";
@@ -20,14 +22,15 @@ function App() {
     "무기력한 넝마 히피": 0,
     "합리화-카멜레온": 0,
   });
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
     handleRestart();
   }, []);
 
   const handleStart = () => {
     setCurrentQuestion(0);
+    setAnswers([]);
     setScores({
       "나의 사감선생님": 0,
       "스마일 마스크": 0,
@@ -37,7 +40,7 @@ function App() {
     });
   };
 
-  const handleChoice = (choice) => {
+  const handleChoice = async (choice) => {
     if (currentQuestion === null) return;
 
     const question = questions[currentQuestion];
@@ -48,10 +51,10 @@ function App() {
       newScores[trait] += selectedScores[trait];
     }
     setScores(newScores);
-
-    console.log(`질문 ${currentQuestion + 1} 선택: ${choice}`);
-    console.log("선택에 따른 점수:", selectedScores);
-    console.log("업데이트된 총 점수:", newScores);
+    setAnswers((prevAnswers) => [
+      ...prevAnswers,
+      { question: currentQuestion + 1, choice },
+    ]);
 
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
@@ -62,12 +65,27 @@ function App() {
       );
       const trait = results[result];
 
+      console.log(JSON.stringify(answers));
+      console.log(answers.length);
+
+      const { data, error } = await supabase
+        .from("offtherecord-survey")
+        .insert({ answers: JSON.stringify(answers), trait: trait.slug })
+        .select();
+
+      if (error) {
+        console.error("Error inserting data:", error);
+      } else {
+        console.log("Data inserted successfully:", data);
+      }
+
       router.push(`/traits/${trait.slug}`);
     }
   };
 
   const handleRestart = () => {
     setCurrentQuestion(null);
+    setAnswers([]);
     setScores({
       "나의 사감선생님": 0,
       "스마일 마스크": 0,
