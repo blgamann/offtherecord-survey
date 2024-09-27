@@ -1,101 +1,93 @@
-import Image from "next/image";
+// src/App.js
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import StartScreen from "./components/StartScreen";
+import QuestionScreen from "./components/QuestionScreen";
+import ResultScreen from "./components/ResultScreen";
+import questions from "./data/question";
+
+function App() {
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [scores, setScores] = useState({
+    "나의 사감선생님": 0,
+    "스마일 마스크": 0,
+    "관심에 목마른, 스포터 라이트": 0,
+    "무기력한 넝마 히피": 0,
+    "합리화-카멜레온": 0,
+  });
+  const [showResult, setShowResult] = useState(false);
+
+  const handleStart = () => {
+    setCurrentQuestion(0);
+    setScores({
+      "나의 사감선생님": 0,
+      "스마일 마스크": 0,
+      "관심에 목마른, 스포터 라이트": 0,
+      "무기력한 넝마 히피": 0,
+      "합리화-카멜레온": 0,
+    });
+    setShowResult(false);
+  };
+
+  const handleChoice = (choice) => {
+    if (currentQuestion === null) return;
+
+    const question = questions[currentQuestion];
+    const selectedScores = question.scores[choice];
+
+    const newScores = { ...scores };
+    for (let trait in selectedScores) {
+      newScores[trait] += selectedScores[trait];
+    }
+    setScores(newScores);
+
+    console.log(`질문 ${currentQuestion + 1} 선택: ${choice}`);
+    console.log("선택에 따른 점수:", selectedScores);
+    console.log("업데이트된 총 점수:", newScores);
+
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setShowResult(true);
+      setCurrentQuestion(null);
+    }
+  };
+
+  const handleRestart = () => {
+    setCurrentQuestion(null);
+    setScores({
+      "나의 사감선생님": 0,
+      "스마일 마스크": 0,
+      "관심에 목마른, 스포터 라이트": 0,
+      "무기력한 넝마 히피": 0,
+      "합리화-카멜레온": 0,
+    });
+    setShowResult(false);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-blue-200 p-4">
+      <div className="w-full max-w-lg md:max-w-2xl bg-white shadow-lg rounded-lg p-6">
+        {!showResult && currentQuestion === null && (
+          <StartScreen onStart={handleStart} />
+        )}
+        {!showResult &&
+          currentQuestion !== null &&
+          currentQuestion < questions.length && (
+            <QuestionScreen
+              question={questions[currentQuestion]}
+              current={currentQuestion + 1}
+              total={questions.length}
+              onChoice={handleChoice}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          )}
+        {showResult && (
+          <ResultScreen scores={scores} onRestart={handleRestart} />
+        )}
+      </div>
     </div>
   );
 }
+
+export default App;
