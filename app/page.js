@@ -11,33 +11,30 @@ import QuestionScreen from "./components/QuestionScreen";
 import questions from "./data/question";
 import results from "./data/result";
 
+const INITIAL_SCORES = {
+  "나의 사감선생님": 0,
+  "스마일 마스크": 0,
+  "관심에 목마른, 스포터 라이트": 0,
+  "무기력한 넝마 히피": 0,
+  "합리화-카멜레온": 0,
+};
+
 function App() {
   const router = useRouter();
 
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [scores, setScores] = useState({
-    "나의 사감선생님": 0,
-    "스마일 마스크": 0,
-    "관심에 목마른, 스포터 라이트": 0,
-    "무기력한 넝마 히피": 0,
-    "합리화-카멜레온": 0,
-  });
+  const [scores, setScores] = useState({ ...INITIAL_SCORES });
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     handleRestart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleStart = () => {
     setCurrentQuestion(0);
     setAnswers([]);
-    setScores({
-      "나의 사감선생님": 0,
-      "스마일 마스크": 0,
-      "관심에 목마른, 스포터 라이트": 0,
-      "무기력한 넝마 히피": 0,
-      "합리화-카멜레온": 0,
-    });
+    setScores({ ...INITIAL_SCORES });
   };
 
   const handleChoice = async (choice) => {
@@ -46,53 +43,69 @@ function App() {
     const question = questions[currentQuestion];
     const selectedScores = question.scores[choice];
 
+    // Calculate new scores based on the selected choice
     const newScores = { ...scores };
-    for (let trait in selectedScores) {
-      newScores[trait] += selectedScores[trait];
-    }
-    setScores(newScores);
-    setAnswers((prevAnswers) => [
-      ...prevAnswers,
-      { question: currentQuestion + 1, choice },
-    ]);
+    Object.entries(selectedScores).forEach(([trait, value]) => {
+      newScores[trait] += value;
+    });
 
-    if (currentQuestion + 1 < questions.length) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      const maxScore = Math.max(...Object.values(scores));
-      const result = Object.keys(scores).find(
-        (key) => scores[key] === maxScore
+    // Update answers with the current choice
+    const newAnswer = { question: currentQuestion + 1, choice };
+    const updatedAnswers = [...answers, newAnswer];
+
+    // Determine if it's the last question
+    const isLastQuestion = currentQuestion + 1 >= questions.length;
+
+    if (isLastQuestion) {
+      // Determine the result based on the updated scores
+      const maxScore = Math.max(...Object.values(newScores));
+      const topTraits = Object.keys(newScores).filter(
+        (key) => newScores[key] === maxScore
       );
-      const trait = results[result];
 
-      console.log(JSON.stringify(answers));
-      console.log(answers.length);
+      // Handle ties by selecting the first trait (you can modify this as needed)
+      const selectedTraitKey = topTraits[0];
+      const selectedTrait = results[selectedTraitKey];
 
-      const { data, error } = await supabase
-        .from("offtherecord-survey")
-        .insert({ answers: JSON.stringify(answers), trait: trait.slug })
-        .select();
+      try {
+        console.log(updatedAnswers);
+        console.log(updatedAnswers.length);
+        // Insert the survey result into Supabase
+        const { data, error } = await supabase
+          .from("offtherecord-survey")
+          .insert({
+            answers: JSON.stringify(updatedAnswers),
+            trait: selectedTrait.slug,
+          })
+          .select();
 
-      if (error) {
-        console.error("Error inserting data:", error);
-      } else {
-        console.log("Data inserted successfully:", data);
+        if (error) {
+          console.error("Error inserting data:", error);
+          // Optionally, you can display an error message to the user here
+        } else {
+          console.log("Data inserted successfully:", data);
+        }
+
+        // Navigate to the result page
+        router.push(`/traits/${selectedTrait.slug}`);
+      } catch (err) {
+        console.error("Unexpected error:", err);
+        // Optionally, handle unexpected errors
       }
-
-      router.push(`/traits/${trait.slug}`);
+    } else {
+      // Proceed to the next question
+      setCurrentQuestion(currentQuestion + 1);
     }
+
+    // Update the state with the new scores and answers
+    setScores(newScores);
+    setAnswers(updatedAnswers);
   };
 
   const handleRestart = () => {
     setCurrentQuestion(null);
     setAnswers([]);
-    setScores({
-      "나의 사감선생님": 0,
-      "스마일 마스크": 0,
-      "관심에 목마른, 스포터 라이트": 0,
-      "무기력한 넝마 히피": 0,
-      "합리화-카멜레온": 0,
-    });
+    setScores({ ...INITIAL_SCORES });
   };
 
   return (
