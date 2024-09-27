@@ -1,13 +1,17 @@
 // src/App.js
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import StartScreen from "./components/StartScreen";
 import QuestionScreen from "./components/QuestionScreen";
-import ResultScreen from "./components/ResultScreen";
 import questions from "./data/question";
+import results from "./data/result";
 
 function App() {
+  const router = useRouter();
+
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [scores, setScores] = useState({
     "나의 사감선생님": 0,
@@ -16,7 +20,11 @@ function App() {
     "무기력한 넝마 히피": 0,
     "합리화-카멜레온": 0,
   });
-  const [showResult, setShowResult] = useState(false);
+
+  useEffect(() => {
+    console.log("useEffect");
+    handleRestart();
+  }, []);
 
   const handleStart = () => {
     setCurrentQuestion(0);
@@ -27,7 +35,6 @@ function App() {
       "무기력한 넝마 히피": 0,
       "합리화-카멜레온": 0,
     });
-    setShowResult(false);
   };
 
   const handleChoice = (choice) => {
@@ -49,8 +56,13 @@ function App() {
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setShowResult(true);
-      setCurrentQuestion(null);
+      const maxScore = Math.max(...Object.values(scores));
+      const result = Object.keys(scores).find(
+        (key) => scores[key] === maxScore
+      );
+      const trait = results[result];
+
+      router.push(`/traits/${trait.slug}`);
     }
   };
 
@@ -63,27 +75,19 @@ function App() {
       "무기력한 넝마 히피": 0,
       "합리화-카멜레온": 0,
     });
-    setShowResult(false);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-blue-200 p-4">
       <div className="w-full max-w-lg md:max-w-2xl bg-white shadow-lg rounded-lg p-6">
-        {!showResult && currentQuestion === null && (
-          <StartScreen onStart={handleStart} />
-        )}
-        {!showResult &&
-          currentQuestion !== null &&
-          currentQuestion < questions.length && (
-            <QuestionScreen
-              question={questions[currentQuestion]}
-              current={currentQuestion + 1}
-              total={questions.length}
-              onChoice={handleChoice}
-            />
-          )}
-        {showResult && (
-          <ResultScreen scores={scores} onRestart={handleRestart} />
+        {currentQuestion === null && <StartScreen onStart={handleStart} />}
+        {currentQuestion !== null && currentQuestion < questions.length && (
+          <QuestionScreen
+            question={questions[currentQuestion]}
+            current={currentQuestion + 1}
+            total={questions.length}
+            onChoice={handleChoice}
+          />
         )}
       </div>
     </div>

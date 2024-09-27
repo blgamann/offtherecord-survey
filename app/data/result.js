@@ -1,10 +1,7 @@
-// src/components/ResultScreen.js
-
-import React from "react";
-
-const traits = {
+const results = {
   "나의 사감선생님": {
     title: "세련된 지적쟁이, 사감선생님",
+    slug: "perfectionist-dorm-teacher",
     feature:
       "이 캐릭터는 사감선생님의 모습으로, 비판적이고, 통제하는 성향이 강하다. ‘완벽하지 않으면 아무 가치도 없다’는 신념을 가지고 있는 캐릭터. 작은 실수나 불완전한 점을 절대 용납하지 않으며, 실수를 극단적으로 확대하여 불안과 두려움을 심어준다.",
     visual:
@@ -29,6 +26,7 @@ const traits = {
   },
   "스마일 마스크": {
     title: "튀지 않게 움직이는 그림자, 검은망토",
+    slug: "shadowed-masked",
     feature:
       "이 캐릭터는 어두색의 망토를 입고, 얼굴과 눈, 입이 거의 보이지 않게 망토로 자신의 정체성을 숨긴다. 사람들을 불편하지 않게 하기 위해, 있는 듯 없는 듯한 존재감을 나타내는 것이 특징이다. 잘 드러나진 않지만, 시도때도 없이 등장해  ‘말하지 마' ‘친절해야지’ 라고 무언의 명령을 내려서, 솔직하지 못하게 만드는 캐릭터다.",
     visual:
@@ -52,6 +50,7 @@ const traits = {
   },
   "관심에 목마른, 스포터 라이트": {
     title: "관심에 목마른 주인공, 스포터라이터",
+    slug: "attention-starved",
     feature:
       "이 캐릭터는 타인의 관심에 지나치게 예민하고, 타인의 관심이 곧 자신에 대한 존재감이라 자신을 많이 꾸미는 경향이 있습니다. 자연스러운 행동에는 자신이 없고, 꾸며지고 기획된 상황에 스스로를 두고, 타인이 이에 몰입하게 만든다.",
     visual:
@@ -75,6 +74,7 @@ const traits = {
   },
   "무기력한 넝마 히피": {
     title: "고통을 피하는 도망자, 넝마를 쓴 히피",
+    slug: "helpless-hippy",
     feature:
       "이 캐릭터는 자기 자신이 가장 부족하고, 이미 패배한 루저라고 생각한다. 타고나길 가진게 없다고 생각하며, 스스로를 낮게 바라보는 캐릭터이다. 애초에 잘하는게 없다는 생각으로 모든 시도를 꺽어버린다.",
     visual:
@@ -101,6 +101,7 @@ const traits = {
   },
   "합리화-카멜레온": {
     title: "요리조리 잘 피하는 눈치왕, 카멜레온",
+    slug: "rationalizing-chameleon",
     feature:
       "이 캐릭터는 책임을 회피하고 끊임없이 다른 사람이나 상황탓을 하며 자신이 처한 문제를 피한다. 카멜레온처럼 상황에 따라 자신의 반응과 말을 바꿔 상황을 모면하는특징이 있다. 스스로 책임지는 것을 회피하고, 도전을 피하는 것에 능하다.",
     visual:
@@ -125,78 +126,4 @@ const traits = {
   },
 };
 
-function ResultScreen({ scores, onRestart }) {
-  const maxScore = Math.max(...Object.values(scores));
-
-  const result = Object.keys(scores).find((key) => scores[key] === maxScore);
-  const trait = traits[result];
-
-  return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
-          {trait.title}
-        </h1>
-
-        <p className="text-lg text-gray-700 mb-2">{trait.feature}</p>
-        <p className="text-lg text-gray-700 mb-2">{trait.feature}</p>
-        <p className="text-lg text-gray-700 mb-6">{trait.visual}</p>
-
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">키워드</h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.keywords.map((keyword, index) => (
-              <li key={index} className="text-gray-600">
-                {keyword}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            나에게 이런 말로 속삭여요!
-          </h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.whispers.map((whisper, index) => (
-              <li key={index} className="text-gray-600">
-                {whisper}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            Impacts!
-          </h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.impacts.map((impact, index) => (
-              <li key={index} className="text-gray-600">
-                {impact}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            Solution!
-          </h2>
-          <p className="text-lg text-gray-700">{trait.solution}</p>
-        </div>
-
-        <div className="text-center">
-          <button
-            onClick={onRestart}
-            className="mt-4 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
-          >
-            다시 시작하기
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default ResultScreen;
+export default results;
