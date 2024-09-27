@@ -24,16 +24,16 @@ function TraitsPage({ params }) {
         imageUrl:
           "https://i.ibb.co/r4LLyXR/Clean-Shot-2024-09-19-at-09-27-46-2x.png",
         link: {
-          mobileWebUrl: "https://offtherecord-survey.vercel.app",
-          webUrl: "https://offtherecord-survey.vercel.app",
+          mobileWebUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
+          webUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
         },
       },
       buttons: [
         {
           title: "나도 해보기",
           link: {
-            mobileWebUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
-            webUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
+            mobileWebUrl: "https://offtherecord-survey.vercel.app",
+            webUrl: "https://offtherecord-survey.vercel.app",
           },
         },
       ],
