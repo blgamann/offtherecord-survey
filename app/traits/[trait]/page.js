@@ -19,8 +19,8 @@ function TraitsPage({ params }) {
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: "설문조사 하러가기",
-        description: "나의 특성은 무엇일까?",
+        title: traitKey,
+        description: trait.feature,
         imageUrl:
           "https://i.ibb.co/r4LLyXR/Clean-Shot-2024-09-19-at-09-27-46-2x.png",
         link: {
@@ -28,15 +28,15 @@ function TraitsPage({ params }) {
           webUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
         },
       },
-      buttons: [
-        {
-          title: "나도 해보기",
-          link: {
-            mobileWebUrl: "https://offtherecord-survey.vercel.app",
-            webUrl: "https://offtherecord-survey.vercel.app",
-          },
-        },
-      ],
+      // buttons: [
+      //   {
+      //     title: "나도 해보기",
+      //     link: {
+      //       mobileWebUrl: "https://offtherecord-survey.vercel.app",
+      //       webUrl: "https://offtherecord-survey.vercel.app",
+      //     },
+      //   },
+      // ],
     });
   };
 
@@ -47,8 +47,9 @@ function TraitsPage({ params }) {
           {trait.title}
         </h1>
 
+        <h2 className="text-xl font-semibold text-gray-800 mb-2">feature</h2>
         <p className="text-lg text-gray-700 mb-2">{trait.feature}</p>
-        <p className="text-lg text-gray-700 mb-2">{trait.feature}</p>
+        <h2 className="text-xl font-semibold text-gray-800 mb-2">visual</h2>
         <p className="text-lg text-gray-700 mb-6">{trait.visual}</p>
 
         <div className="mb-6">
