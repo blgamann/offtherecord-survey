@@ -50,25 +50,23 @@ function TraitsPage({ params }) {
     };
   }, []);
 
+  const isSafari = () => {
+    if (typeof navigator === "undefined") return false;
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  };
+
   const handleDownload = (key, title) => {
-    alert("이미지를 길게 눌러 저장하세요.");
-    window.open(`/download-${key}.png`, "_blank");
-
-    // console.log(key, title);
-
-    // fetch(`/download-${key}.png`)
-    //   .then((response) => response.blob())
-    //   .then((blob) => {
-    //     const url = window.URL.createObjectURL(blob);
-    //     const a = document.createElement("a");
-    //     a.href = url;
-    //     a.download = `${title}.png`;
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     a.remove();
-    //     window.URL.revokeObjectURL(url);
-    //   })
-    //   .catch(() => alert("이미지 다운로드 중 오류가 발생했습니다."));
+    if (isSafari()) {
+      alert("이미지를 길게 눌러 저장하세요.");
+      window.open(`/download-${key}.png`, "_blank");
+    } else {
+      const link = document.createElement("a");
+      link.href = `/download-${key}.png`;
+      link.download = `${title}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   const shareMessage = () => {
@@ -86,8 +84,7 @@ function TraitsPage({ params }) {
       content: {
         title: trait.title,
         description: trait.feature,
-        imageUrl:
-          "https://i.ibb.co/r4LLyXR/Clean-Shot-2024-09-19-at-09-27-46-2x.png",
+        imageUrl: `https://offtherecord-survey.vercel.app/download-${trait.key}.svg`,
         link: {
           mobileWebUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
           webUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
