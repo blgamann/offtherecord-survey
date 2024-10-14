@@ -2,35 +2,96 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import Image from "next/image";
 
-/**
- * StartScreen Component
- *
- * This component serves as the introductory screen for the survey.
- * It displays a title, a brief description, and a button to start the survey.
- *
- * @param {Object} props - Component props
- * @param {Function} props.onStart - Callback function to initiate the survey
- * @returns {JSX.Element}
- */
 const StartScreen = ({ onStart }) => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 p-4">
-      <div className="bg-white bg-opacity-80 rounded-lg shadow-lg p-8 max-w-md w-full text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">설문조사</h1>
-        <p className="text-lg text-gray-600 mb-8">
-          간단한 10문항 설문을 통해 당신의 성향을 알아보세요!
-        </p>
+  const [showHomeScreen, setShowHomeScreen] = useState(true);
 
-        <button
-          type="button"
-          className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          onClick={onStart}
-          aria-label="Start Survey"
-        >
-          설문 시작하기
-        </button>
+  const handleStartClick = () => {
+    setShowHomeScreen(false);
+  };
+
+  if (showHomeScreen) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <Image
+          src="/home-1.svg"
+          alt="Off The Record"
+          width={274}
+          height={274}
+        />
+        <Image
+          src="/home-2.svg"
+          alt="Off The Record"
+          width={97}
+          height={97}
+          className="pt-[19px]"
+        />
+        <Image
+          src="/home-3.svg"
+          alt="Off The Record"
+          width={340}
+          height={300}
+          className="pt-[33px] pb-[40px]"
+        />
+        <div className="relative w-[300px] h-[85px] flex items-center justify-center">
+          <Image
+            src="/home-4.svg"
+            alt="Off The Record"
+            layout="fill"
+            objectFit="contain"
+          />
+          <button
+            className="absolute text-center z-10 w-full h-full cursor-pointer"
+            onClick={handleStartClick}
+            style={{ color: "#000", fontSize: "27px", fontWeight: 400 }}
+          >
+            방해꾼 찾으러 가기
+          </button>
+        </div>
+        <p className="text-center text-black font-pretendard text-[13px] font-medium leading-[147%] pt-[35px]">
+          N명이 테스트에 참여했어요.
+        </p>
       </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div
+        style={{
+          width: "288px",
+          flexShrink: 0,
+          color: "#000",
+          textAlign: "center",
+          fontSize: "23px",
+          fontStyle: "normal",
+          fontWeight: 400,
+        }}
+      >
+        우리 모두의 내면에는 방해꾼이 살고 있어요.
+      </div>
+      <div className="text-black text-center text-base font-medium leading-[147%] whitespace-pre-wrap mt-[20px]">
+        {`
+        내 안의 비판자는 나 자신과 잘 지낼 때는
+        동기부여가 되지만, 나를 지배할 때는
+        내가 무언가를 시도할 때마다 과도한 비판을
+        통해 불안감을 조성하는 방해꾼이
+        되기도 합니다.
+
+        내 안의 방해꾼은 어떤 모습일지
+        지금 테스트해 보세요!
+        `}
+      </div>
+      <button
+        type="button"
+        className="w-[286px] h-[85px] border border-black bg-[#D9D9D9] text-black text-center text-[27px] font-medium mt-[70px]"
+        onClick={onStart}
+        aria-label="Start Survey"
+      >
+        테스트 시작!
+      </button>
     </div>
   );
 };

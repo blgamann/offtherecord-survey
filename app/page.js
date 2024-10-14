@@ -10,6 +10,7 @@ import StartScreen from "./components/StartScreen";
 import QuestionScreen from "./components/QuestionScreen";
 import questions from "./data/question";
 import results from "./data/result";
+import Image from "next/image";
 
 const INITIAL_SCORES = {
   "나의 사감선생님": 0,
@@ -25,6 +26,7 @@ function App() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [scores, setScores] = useState({ ...INITIAL_SCORES });
   const [answers, setAnswers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     handleRestart();
@@ -57,6 +59,7 @@ function App() {
     const isLastQuestion = currentQuestion + 1 >= questions.length;
 
     if (isLastQuestion) {
+      setIsLoading(true);
       // Determine the result based on the updated scores
       const maxScore = Math.max(...Object.values(newScores));
       const topTraits = Object.keys(newScores).filter(
@@ -87,10 +90,13 @@ function App() {
         }
 
         // Navigate to the result page
-        router.push(`/traits/${selectedTrait.slug}`);
       } catch (err) {
         console.error("Unexpected error:", err);
         // Optionally, handle unexpected errors
+      } finally {
+        // Add a delay of 5 seconds before navigating to the result page
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        router.push(`/traits/${selectedTrait.slug}`);
       }
     } else {
       // Proceed to the next question
@@ -106,20 +112,36 @@ function App() {
     setCurrentQuestion(null);
     setAnswers([]);
     setScores({ ...INITIAL_SCORES });
+    setIsLoading(false);
+  };
+
+  const Loading = () => {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-[50px]">
+        <Image src="/loading.png" alt="Loading" width={149} height={199} />
+        <div className="text-black text-center font-['Sandoll_Typewrite'] text-[23px] font-normal leading-[164%] whitespace-pre-wrap">
+          {`내 안의 방해꾼\n찾는 중...`}
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-blue-200 p-4">
-      <div className="w-full max-w-lg md:max-w-2xl bg-white shadow-lg rounded-lg p-6">
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full bg-[url('/home-bg.png')] bg-cover bg-center bg-no-repeat">
         {currentQuestion === null && <StartScreen onStart={handleStart} />}
-        {currentQuestion !== null && currentQuestion < questions.length && (
-          <QuestionScreen
-            question={questions[currentQuestion]}
-            current={currentQuestion + 1}
-            total={questions.length}
-            onChoice={handleChoice}
-          />
-        )}
+        {currentQuestion !== null &&
+          currentQuestion < questions.length &&
+          (isLoading ? (
+            <Loading />
+          ) : (
+            <QuestionScreen
+              question={questions[currentQuestion]}
+              current={currentQuestion + 1}
+              total={questions.length}
+              onChoice={handleChoice}
+            />
+          ))}
       </div>
     </div>
   );

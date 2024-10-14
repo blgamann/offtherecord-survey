@@ -17,55 +17,59 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element}
  */
 const QuestionScreen = ({ question, current, total, onChoice }) => {
-  // Calculate the progress percentage
-  const progressPercentage = Math.min((current / total) * 100, 100);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-blue-200 p-4">
-      <div className="w-full max-w-xl bg-white bg-opacity-90 rounded-lg shadow-lg p-8">
-        {/* Progress Indicator */}
-        <div className="w-full mb-6">
-          <div className="flex justify-between mb-2">
-            <span className="text-sm font-medium text-blue-700">
-              문항 {current} / {total}
-            </span>
-            <span className="text-sm font-medium text-blue-700">진행 상황</span>
-          </div>
-          <div
-            className="w-full bg-gray-200 rounded-full h-2.5"
-            aria-hidden="true"
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <span
+        style={{
+          visibility: current === 5 || current === 9 ? "visible" : "hidden",
+          color: "#000",
+          textAlign: "center",
+          fontSize: "16px",
+          fontStyle: "normal",
+          fontWeight: 400,
+          lineHeight: "164%",
+        }}
+        className="pb-[8px]"
+      >
+        {current === 5 ? "절반이나 왔어요!" : "거의 끝났어요!"}
+      </span>
+      <span
+        style={{
+          color: "#000",
+          textAlign: "center",
+          fontSize: "23px",
+          fontStyle: "normal",
+          fontWeight: 400,
+          lineHeight: "164%",
+        }}
+      >
+        Q{current}.
+      </span>
+      <div className="flex flex-col items-center justify-center text-center whitespace-pre-wrap pt-[42px] pb-[147px]"
+        style={{
+          color: "#000",
+          textAlign: "center",
+          fontSize: "23px",
+          fontStyle: "normal",
+          fontWeight: 400,
+          lineHeight: "164%",
+        }}
+      >
+        {question.text}
+      </div>
+      {/* Choices */}
+      <div className="flex flex-col items-center justify-center gap-[14px]">
+        {Object.entries(question.choices).map(([choiceKey, choiceValue]) => (
+          <button
+            key={choiceKey}
+            type="button"
+            className="w-[286px] h-[85px] border border-black bg-[#D9D9D9] text-black text-center text-[16px] font-medium whitespace-pre-wrap"
+            onClick={() => onChoice(choiceKey)}
+            aria-label={`Choose option ${choiceKey}: ${choiceValue}`}
           >
-            <div
-              className="bg-blue-600 h-2.5 rounded-full"
-              style={{ width: `${progressPercentage}%` }}
-              role="progressbar"
-              aria-valuenow={current}
-              aria-valuemin="0"
-              aria-valuemax={total}
-              aria-label={`Progress: ${current} out of ${total} questions`}
-            ></div>
-          </div>
-        </div>
-
-        {/* Question Text */}
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-          질문 {current}: {question.text}
-        </h2>
-
-        {/* Choices */}
-        <div className="flex flex-col w-full space-y-4">
-          {Object.entries(question.choices).map(([choiceKey, choiceValue]) => (
-            <button
-              key={choiceKey}
-              type="button"
-              className="w-full px-4 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-              onClick={() => onChoice(choiceKey)}
-              aria-label={`Choose option ${choiceKey}: ${choiceValue}`}
-            >
-              {choiceValue}
-            </button>
-          ))}
-        </div>
+            {choiceValue}
+          </button>
+        ))}
       </div>
     </div>
   );

@@ -5,18 +5,8 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import results from "../../data/result";
+import Image from "next/image";
 
-/**
- * TraitsPage Component
- *
- * This component displays detailed information about a specific trait.
- * It includes features such as sharing the trait via KakaoTalk and restarting the survey.
- *
- * @param {Object} props - Component props
- * @param {Object} props.params - Route parameters
- * @param {string} props.params.trait - The slug of the trait to display
- * @returns {JSX.Element}
- */
 function TraitsPage({ params }) {
   const router = useRouter();
   const { trait: traitSlug } = params;
@@ -121,94 +111,186 @@ function TraitsPage({ params }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-blue-200 p-4">
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
-        {/* Trait Title */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen pt-[60px] bg-[#95D7FF]">
+      <Image src="/result-5.png" alt="Loading" width={231} height={199} />
+      <div className="mt-[32px] mb-[40px]">
+        <div className="text-black text-center text-[25px] font-normal leading-[121%]">
+          {trait.subtitle}
+        </div>
+        <div className="text-black text-[43px] font-normal leading-[121%]">
           {trait.title}
-        </h1>
-
-        {/* Feature Section */}
-        <section className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">특징</h2>
-          <p className="text-lg text-gray-700">{trait.feature}</p>
-        </section>
-
-        {/* Visual Section */}
-        <section className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            시각적 요소
-          </h2>
-          <p className="text-lg text-gray-700">{trait.visual}</p>
-        </section>
-
-        {/* Keywords Section */}
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">키워드</h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.keywords.map((keyword, index) => (
-              <li key={index} className="text-gray-600">
-                {keyword}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Whispers Section */}
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            나에게 이런 말로 속삭여요!
-          </h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.whispers.map((whisper, index) => (
-              <li key={index} className="text-gray-600">
-                {whisper}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Impacts Section */}
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            Impacts!
-          </h2>
-          <ul className="list-disc list-inside space-y-1">
-            {trait.impacts.map((impact, index) => (
-              <li key={index} className="text-gray-600">
-                {impact}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Solution Section */}
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-            Solution!
-          </h2>
-          <p className="text-lg text-gray-700">{trait.solution}</p>
-        </section>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <button
-            onClick={() => router.push("/")}
-            className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-            aria-label="Restart Survey"
-          >
-            다시 시작하기
-          </button>
-
-          <button
-            onClick={shareMessage}
-            className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75"
-            aria-label="Share via KakaoTalk"
-          >
-            카카오톡으로 공유
-          </button>
         </div>
       </div>
+
+      <div className="w-[360px] text-center flex justify-center items-center px-[25px] py-[47px] flex-shrink-0 border border-solid border-black bg-white whitespace-pre-wrap">
+        <span
+          style={{
+            color: "#000",
+            textAlign: "center",
+            fontSize: "16px",
+            fontStyle: "normal",
+            fontWeight: 500,
+            lineHeight: "183%", // 29.28px
+          }}
+        >
+          {trait.feature
+            .split("**")
+            .map((part, index) =>
+              index % 2 === 1 ? <strong key={index}>{part}</strong> : part
+            )}
+        </span>
+      </div>
+
+      <div className="w-[360px] border border-solid border-black bg-white px-[25px] mt-[40px] flex flex-col items-center">
+        <div
+          className={`w-[265px] bg-[url('/result-${trait.key}-1.png')] bg-cover bg-center text-center mt-[50px] mb-[20px]`}
+        >
+          <span className="text-black text-center text-xl font-normal leading-[183%]">
+            나한테 이런 말로 속삭여요!
+          </span>
+        </div>
+        {trait.whispers.map((whisper, index) => (
+          <div
+            key={index}
+            className="text-black text-center text-base font-medium leading-[183%]"
+          >
+            "{whisper}"
+          </div>
+        ))}
+
+        <div className="flex justify-center items-center my-[30px]">
+          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+        </div>
+
+        <div
+          className={`w-[317px] bg-[url('/result-${trait.key}-2.png')] bg-cover bg-center text-center mb-[20px]`}
+        >
+          <span className="text-black text-center text-xl font-normal leading-[183%]">
+            {trait.title}
+            {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
+              ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
+                  44032) %
+                  28 >
+                0
+                ? "이"
+                : "가"
+              : "이"}{" "}
+            나를 지배할 때
+          </span>
+        </div>
+        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-wrap">
+          {trait.whenIamDominatedBy}
+        </div>
+
+        <div className="flex justify-center items-center my-[30px]">
+          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+        </div>
+
+        <div
+          className={`w-[322px] bg-[url('/result-${trait.key}-3.png')] bg-cover bg-center text-center mb-[20px]`}
+        >
+          <span className="text-black text-center text-xl font-normal leading-[183%]">
+            {trait.title}
+            {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
+              ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
+                  44032) %
+                  28 >
+                0
+                ? "이"
+                : "가"
+              : "이"}{" "}
+            나와 조화롭게 지낼 때
+          </span>
+        </div>
+        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-wrap">
+          {trait.whenIamHarmoniousWith}
+        </div>
+
+        <div className="flex justify-center items-center my-[30px]">
+          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+        </div>
+
+        <div
+          className={`w-[317px] bg-[url('/result-${trait.key}-4.png')] bg-cover bg-center text-center mb-[20px]`}
+        >
+          <span className="text-black text-center text-xl font-normal leading-[183%]">
+            {trait.title}
+            {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
+              ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
+                  44032) %
+                  28 >
+                0
+                ? "과"
+                : "와"
+              : "과"}{" "}
+            잘 지낼 수 있는 방법!
+          </span>
+        </div>
+        <div className="text-black text-center text-base font-medium leading-[183%] pb-[40px] whitespace-pre-wrap">
+          {trait.howIGetAlongWith}
+        </div>
+      </div>
+
+      <div className="flex gap-[10px] mt-[50px] mb-[75px]">
+        <div
+          className="flex flex-col items-center justify-between cursor-pointer gap-[6px]"
+          onClick={() => router.push("/")}
+        >
+          <Image src="/(1).svg" alt="Loading" width={63} height={100} />
+          <span>다시 테스트하기</span>
+        </div>
+        <div
+          className="flex flex-col items-center justify-between cursor-pointer"
+          onClick={shareMessage}
+        >
+          <Image src="/(2).svg" alt="Loading" width={70} height={100} />
+          <span>친구에게 보내기</span>
+        </div>
+        <div
+          className="flex flex-col items-center justify-between cursor-pointer"
+          onClick={() => {
+            const imageUrl = "/download-1.png";
+
+            // For iOS devices
+            if (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) {
+              // Create a temporary anchor element
+              const link = document.createElement("a");
+              link.href = imageUrl;
+              link.download = "download-1.png";
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+
+              // Trigger a click on the anchor to open it in a new tab
+              // This will typically open the image in the browser, allowing the user to save it to their photos
+              link.click();
+            } else {
+              // For other devices, use the traditional download method
+              fetch(imageUrl)
+                .then((response) => response.blob())
+                .then((blob) => {
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.download = "download-1.png";
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  window.URL.revokeObjectURL(url);
+                });
+            }
+          }}
+        >
+          <Image src="/(3).svg" alt="Loading" width={68} height={100} />
+          <span>이미지 다운 받기</span>
+        </div>
+      </div>
+      <Image
+        src="/meetme.svg"
+        alt="Loading"
+        width={90}
+        height={90}
+        className="mb-[60px]"
+      />
     </div>
   );
 }
