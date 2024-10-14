@@ -50,9 +50,27 @@ function TraitsPage({ params }) {
     };
   }, []);
 
-  /**
-   * Handles sharing the trait via KakaoTalk
-   */
+  const handleDownload = (key, title) => {
+    alert("이미지를 길게 눌러 저장하세요.");
+    window.open(`/download-${key}.png`, "_blank");
+
+    // console.log(key, title);
+
+    // fetch(`/download-${key}.png`)
+    //   .then((response) => response.blob())
+    //   .then((blob) => {
+    //     const url = window.URL.createObjectURL(blob);
+    //     const a = document.createElement("a");
+    //     a.href = url;
+    //     a.download = `${title}.png`;
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     a.remove();
+    //     window.URL.revokeObjectURL(url);
+    //   })
+    //   .catch(() => alert("이미지 다운로드 중 오류가 발생했습니다."));
+  };
+
   const shareMessage = () => {
     if (!window.Kakao) {
       alert("카카오톡 공유 기능을 사용할 수 없습니다.");
@@ -110,10 +128,48 @@ function TraitsPage({ params }) {
     );
   }
 
+  const bgColors = {
+    1: "#95D7FF",
+    2: "#FAD03C",
+    3: "#FF7EBB",
+    4: "#50DB98",
+    5: "#f4f4f4",
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen pt-[60px] bg-[#95D7FF]">
-      <Image src="/result-5.png" alt="Loading" width={231} height={199} />
-      <div className="mt-[32px] mb-[40px]">
+    <div
+      className="flex flex-col items-center justify-center min-h-screen pt-[60px]"
+      style={{ backgroundColor: bgColors[trait.key] }}
+    >
+      <div className="h-[304px] flex flex-col items-center justify-center">
+        <Image
+          src={`/output-${trait.key}.svg`}
+          alt={`${trait.title}`}
+          width={
+            trait.key === "1"
+              ? 121
+              : trait.key === "2"
+              ? 190
+              : trait.key === "3"
+              ? 267
+              : trait.key === "4"
+              ? 345
+              : 230
+          }
+          height={
+            trait.key === "1"
+              ? 34
+              : trait.key === "2"
+              ? 269
+              : trait.key === "3"
+              ? 322
+              : trait.key === "4"
+              ? 170
+              : 228
+          }
+        />
+      </div>
+      <div className="mt-[32px] mb-[40px] flex flex-col items-center justify-center">
         <div className="text-black text-center text-[25px] font-normal leading-[121%]">
           {trait.subtitle}
         </div>
@@ -122,7 +178,7 @@ function TraitsPage({ params }) {
         </div>
       </div>
 
-      <div className="w-[360px] text-center flex justify-center items-center px-[25px] py-[47px] flex-shrink-0 border border-solid border-black bg-white whitespace-pre-wrap">
+      <div className="w-[360px] text-center flex justify-center items-center px-[25px] py-[47px] flex-shrink-0 border border-solid border-black bg-white">
         <span
           style={{
             color: "#000",
@@ -141,11 +197,15 @@ function TraitsPage({ params }) {
         </span>
       </div>
 
-      <div className="w-[360px] border border-solid border-black bg-white px-[25px] mt-[40px] flex flex-col items-center">
-        <div
-          className={`w-[265px] bg-[url('/result-${trait.key}-1.png')] bg-cover bg-center text-center mt-[50px] mb-[20px]`}
-        >
-          <span className="text-black text-center text-xl font-normal leading-[183%]">
+      <div className="w-[360px] mt-[50px] mb-[20px] border border-solid border-black bg-white px-[25px] flex flex-col items-center">
+        <div className="relative mb-[20px] mt-[40px]">
+          <Image
+            src={`/result-${trait.key}-1.png`}
+            alt="나한테 이런 말로 속삭여요!"
+            width={265}
+            height={150}
+          />
+          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             나한테 이런 말로 속삭여요!
           </span>
         </div>
@@ -162,10 +222,15 @@ function TraitsPage({ params }) {
           <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
         </div>
 
-        <div
-          className={`w-[317px] bg-[url('/result-${trait.key}-2.png')] bg-cover bg-center text-center mb-[20px]`}
-        >
-          <span className="text-black text-center text-xl font-normal leading-[183%]">
+        <div className="relative mb-[20px]">
+          <Image
+            src={`/result-${trait.key}-2.png`}
+            alt={`${trait.title}이 나를 지배할 때`}
+            width={317}
+            height={200}
+            className="text-center"
+          />
+          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -186,10 +251,15 @@ function TraitsPage({ params }) {
           <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
         </div>
 
-        <div
-          className={`w-[322px] bg-[url('/result-${trait.key}-3.png')] bg-cover bg-center text-center mb-[20px]`}
-        >
-          <span className="text-black text-center text-xl font-normal leading-[183%]">
+        <div className="relative mb-[20px]">
+          <Image
+            src={`/result-${trait.key}-3.png`}
+            alt={`${trait.title}이 나와 조화롭게 지낼 때`}
+            width={322}
+            height={200}
+            className="text-center"
+          />
+          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -210,10 +280,15 @@ function TraitsPage({ params }) {
           <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
         </div>
 
-        <div
-          className={`w-[317px] bg-[url('/result-${trait.key}-4.png')] bg-cover bg-center text-center mb-[20px]`}
-        >
-          <span className="text-black text-center text-xl font-normal leading-[183%]">
+        <div className="relative mb-[20px]">
+          <Image
+            src={`/result-${trait.key}-4.png`}
+            alt={`${trait.title}과 잘 지낼 수 있는 방법!`}
+            width={317}
+            height={200}
+            className="text-center"
+          />
+          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -231,7 +306,7 @@ function TraitsPage({ params }) {
         </div>
       </div>
 
-      <div className="flex gap-[10px] mt-[50px] mb-[75px]">
+      <div className="flex gap-[20px] mt-[50px] mb-[75px]">
         <div
           className="flex flex-col items-center justify-between cursor-pointer gap-[6px]"
           onClick={() => router.push("/")}
@@ -248,37 +323,7 @@ function TraitsPage({ params }) {
         </div>
         <div
           className="flex flex-col items-center justify-between cursor-pointer"
-          onClick={() => {
-            const imageUrl = "/download-1.png";
-
-            // For iOS devices
-            if (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) {
-              // Create a temporary anchor element
-              const link = document.createElement("a");
-              link.href = imageUrl;
-              link.download = "download-1.png";
-              link.target = "_blank";
-              link.rel = "noopener noreferrer";
-
-              // Trigger a click on the anchor to open it in a new tab
-              // This will typically open the image in the browser, allowing the user to save it to their photos
-              link.click();
-            } else {
-              // For other devices, use the traditional download method
-              fetch(imageUrl)
-                .then((response) => response.blob())
-                .then((blob) => {
-                  const url = window.URL.createObjectURL(blob);
-                  const link = document.createElement("a");
-                  link.href = url;
-                  link.download = "download-1.png";
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  window.URL.revokeObjectURL(url);
-                });
-            }
-          }}
+          onClick={() => handleDownload(trait.key, trait.title)}
         >
           <Image src="/(3).svg" alt="Loading" width={68} height={100} />
           <span>이미지 다운 받기</span>
