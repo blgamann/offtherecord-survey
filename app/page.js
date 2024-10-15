@@ -71,11 +71,9 @@ function App() {
       const selectedTrait = results[selectedTraitKey];
 
       try {
-        console.log(updatedAnswers);
-        console.log(updatedAnswers.length);
         // Insert the survey result into Supabase
         const { data, error } = await supabase
-          .from("offtherecord-survey")
+          .from("off-the-record")
           .insert({
             answers: JSON.stringify(updatedAnswers),
             trait: selectedTrait.slug,
@@ -119,7 +117,7 @@ function App() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-[50px]">
         <Image src="/loading.png" alt="Loading" width={149} height={199} />
-        <div className="text-black text-center font-['Sandoll_Typewrite'] text-[23px] font-normal leading-[164%] whitespace-pre-wrap">
+        <div className="font-meetme text-black text-center text-[23px] font-normal leading-[164%] whitespace-pre-wrap">
           {`내 안의 방해꾼\n찾는 중...`}
         </div>
       </div>

@@ -1,16 +1,32 @@
 // src/components/StartScreen.js
 
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Image from "next/image";
+import { supabase } from "../lib/supabase";
 
 const StartScreen = ({ onStart }) => {
   const [showHomeScreen, setShowHomeScreen] = useState(true);
+  const [n, setN] = useState(0);
 
   const handleStartClick = () => {
     setShowHomeScreen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { count, error } = await supabase
+          .from("off-the-record")
+          .select("*", { count: "exact", head: true });
+        setN(count);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (showHomeScreen) {
     return (
@@ -43,16 +59,18 @@ const StartScreen = ({ onStart }) => {
             objectFit="contain"
           />
           <button
-            className="absolute text-center z-10 w-full h-full cursor-pointer"
+            className="absolute text-center z-10 w-full h-full cursor-pointer font-meetme"
             onClick={handleStartClick}
             style={{ color: "#000", fontSize: "27px", fontWeight: 400 }}
           >
             방해꾼 찾으러 가기
           </button>
         </div>
-        <p className="text-center text-black font-pretendard text-[13px] font-medium leading-[147%] pt-[35px]">
-          N명이 테스트에 참여했어요.
-        </p>
+        {n > 0 && (
+          <p className="text-center text-black font-pretendard text-[13px] font-medium leading-[147%] pt-[35px]">
+            {n}명이 테스트에 참여했어요.
+          </p>
+        )}
       </div>
     );
   }
@@ -60,6 +78,7 @@ const StartScreen = ({ onStart }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div
+        className="font-meetme whitespace-pre-line"
         style={{
           width: "288px",
           flexShrink: 0,
@@ -70,19 +89,18 @@ const StartScreen = ({ onStart }) => {
           fontWeight: 400,
         }}
       >
-        우리 모두의 내면에는 방해꾼이 살고 있어요.
+        {`우리 모두의 내면에는 방해꾼이
+살고 있어요.`}
       </div>
-      <div className="text-black text-center text-base font-medium leading-[147%] whitespace-pre-wrap mt-[20px]">
-        {`
-        내 안의 비판자는 나 자신과 잘 지낼 때는
-        동기부여가 되지만, 나를 지배할 때는
-        내가 무언가를 시도할 때마다 과도한 비판을
-        통해 불안감을 조성하는 방해꾼이
-        되기도 합니다.
+      <div className="text-black text-center text-base font-medium leading-[147%] whitespace-pre-wrap mt-[50px]">
+        {`내 안의 비판자는 나 자신과 잘 지낼 때는
+동기부여가 되지만, 나를 지배할 때는
+내가 무언가를 시도할 때마다 과도한 비판을
+통해 불안감을 조성하는 방해꾼이
+되기도 합니다.
 
-        내 안의 방해꾼은 어떤 모습일지
-        지금 테스트해 보세요!
-        `}
+내 안의 방해꾼은 어떤 모습일지
+지금 테스트해 보세요!`}
       </div>
       <button
         type="button"

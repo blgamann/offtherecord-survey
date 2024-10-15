@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Meetme";
+  src: url("/fonts/Meetme.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: "Pretendard", sans-serif;
+}

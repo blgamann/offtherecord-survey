@@ -133,6 +133,14 @@ function TraitsPage({ params }) {
     5: "#f4f4f4",
   };
 
+  const bgImages = {
+    1: "/result-bg-5.png",
+    2: "/result-bg-5.png",
+    3: "/result-bg-5.png",
+    4: "/result-bg-5.png",
+    5: "/result-bg-5.png",
+  };
+
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen pt-[60px]"
@@ -167,15 +175,15 @@ function TraitsPage({ params }) {
         />
       </div>
       <div className="mt-[32px] mb-[40px] flex flex-col items-center justify-center">
-        <div className="text-black text-center text-[25px] font-normal leading-[121%]">
+        <div className="font-meetme text-black text-center text-[25px] font-normal leading-[121%]">
           {trait.subtitle}
         </div>
-        <div className="text-black text-[43px] font-normal leading-[121%]">
+        <div className="font-meetme text-black text-[43px] font-normal leading-[121%]">
           {trait.title}
         </div>
       </div>
 
-      <div className="w-[360px] text-center flex justify-center items-center px-[25px] py-[47px] flex-shrink-0 border border-solid border-black bg-white">
+      <div className="whitespace-pre-line w-[340px] text-center flex justify-center items-center px-[25px] py-[47px] flex-shrink-0 border border-solid border-black bg-white">
         <span
           style={{
             color: "#000",
@@ -194,7 +202,7 @@ function TraitsPage({ params }) {
         </span>
       </div>
 
-      <div className="w-[360px] mt-[50px] mb-[20px] border border-solid border-black bg-white px-[25px] flex flex-col items-center">
+      <div className="w-[340px] mt-[50px] mb-[20px] border border-solid border-black bg-white px-[25px] flex flex-col items-center">
         <div className="relative mb-[20px] mt-[40px]">
           <Image
             src={`/result-${trait.key}-1.png`}
@@ -202,7 +210,7 @@ function TraitsPage({ params }) {
             width={265}
             height={150}
           />
-          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
+          <span className="font-meetme absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             나한테 이런 말로 속삭여요!
           </span>
         </div>
@@ -216,7 +224,7 @@ function TraitsPage({ params }) {
         ))}
 
         <div className="flex justify-center items-center my-[30px]">
-          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+          <Image src="/stroke.png" alt="Loading" width={340} height={1} />
         </div>
 
         <div className="relative mb-[20px]">
@@ -227,7 +235,7 @@ function TraitsPage({ params }) {
             height={200}
             className="text-center"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
+          <span className="font-meetme absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -240,12 +248,12 @@ function TraitsPage({ params }) {
             나를 지배할 때
           </span>
         </div>
-        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-wrap">
+        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-line">
           {trait.whenIamDominatedBy}
         </div>
 
         <div className="flex justify-center items-center my-[30px]">
-          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+          <Image src="/stroke.png" alt="Loading" width={340} height={1} />
         </div>
 
         <div className="relative mb-[20px]">
@@ -256,7 +264,7 @@ function TraitsPage({ params }) {
             height={200}
             className="text-center"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
+          <span className="font-meetme absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -269,12 +277,12 @@ function TraitsPage({ params }) {
             나와 조화롭게 지낼 때
           </span>
         </div>
-        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-wrap">
+        <div className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-line">
           {trait.whenIamHarmoniousWith}
         </div>
 
         <div className="flex justify-center items-center my-[30px]">
-          <Image src="/stroke.svg" alt="Loading" width={308} height={1} />
+          <Image src="/stroke.png" alt="Loading" width={340} height={1} />
         </div>
 
         <div className="relative mb-[20px]">
@@ -285,7 +293,7 @@ function TraitsPage({ params }) {
             height={200}
             className="text-center"
           />
-          <span className="absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
+          <span className="font-meetme absolute inset-0 flex items-center justify-center text-black text-center text-xl font-normal leading-[183%]">
             {trait.title}
             {trait.title.charAt(trait.title.length - 1).match(/[가-힣]/)
               ? (trait.title.charAt(trait.title.length - 1).charCodeAt(0) -
@@ -298,32 +306,32 @@ function TraitsPage({ params }) {
             잘 지낼 수 있는 방법!
           </span>
         </div>
-        <div className="text-black text-center text-base font-medium leading-[183%] pb-[40px] whitespace-pre-wrap">
+        <div className="text-black text-center text-base font-medium leading-[183%] pb-[40px] whitespace-pre-line">
           {trait.howIGetAlongWith}
         </div>
       </div>
 
-      <div className="flex gap-[20px] mt-[50px] mb-[75px]">
+      <div className="flex w-[340px] justify-between mt-[30px] mb-[75px] px-[16px]">
         <div
           className="flex flex-col items-center justify-between cursor-pointer gap-[6px]"
           onClick={() => router.push("/")}
         >
           <Image src="/(1).svg" alt="Loading" width={63} height={100} />
-          <span>다시 테스트하기</span>
+          <span className="font-meetme">다시 테스트하기</span>
         </div>
         <div
           className="flex flex-col items-center justify-between cursor-pointer"
           onClick={shareMessage}
         >
           <Image src="/(2).svg" alt="Loading" width={70} height={100} />
-          <span>친구에게 보내기</span>
+          <span className="font-meetme">친구에게 보내기</span>
         </div>
         <div
           className="flex flex-col items-center justify-between cursor-pointer"
           onClick={() => handleDownload(trait.key, trait.title)}
         >
           <Image src="/(3).svg" alt="Loading" width={68} height={100} />
-          <span>이미지 다운 받기</span>
+          <span className="font-meetme">이미지 다운 받기</span>
         </div>
       </div>
       <Image

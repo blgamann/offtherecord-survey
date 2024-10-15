@@ -29,7 +29,7 @@ const QuestionScreen = ({ question, current, total, onChoice }) => {
           fontWeight: 400,
           lineHeight: "164%",
         }}
-        className="pb-[8px]"
+        className="pb-[8px] font-meetme"
       >
         {current === 5 ? "절반이나 왔어요!" : "거의 끝났어요!"}
       </span>
@@ -42,10 +42,12 @@ const QuestionScreen = ({ question, current, total, onChoice }) => {
           fontWeight: 400,
           lineHeight: "164%",
         }}
+        className="font-meetme"
       >
         Q{current}.
       </span>
-      <div className="flex flex-col items-center justify-center text-center whitespace-pre-wrap pt-[42px] pb-[147px]"
+      <div
+        className="font-meetme flex flex-col items-center justify-center text-center whitespace-pre-wrap pt-[42px] pb-[147px]"
         style={{
           color: "#000",
           textAlign: "center",

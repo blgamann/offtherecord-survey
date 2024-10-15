@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
-      <head>{/* Other head elements like meta tags can be added here */}</head>
+      <head></head>
       <body>
         {/* Include KakaoInitializer to load and initialize the Kakao SDK */}
         <KakaoInitializer />

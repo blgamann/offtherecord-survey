@@ -16,7 +16,7 @@ export default function ResultPage() {
     const fetchData = async () => {
       try {
         const { data: fetchedData, error } = await supabase
-          .from("offtherecord-survey")
+          .from("off-the-record")
           .select("*")
           .order("created_at", { ascending: false });
 
