@@ -16,8 +16,8 @@ export const metadata = {
     images: [
       {
         url: "https://offtherecord.nicetomeetme.co.kr/opengraph-image.png",
-        width: 680,
-        height: 878,
+        width: 340,
+        height: 211,
         alt: "오프더레코드 - 방해꾼의 방",
       },
     ],
