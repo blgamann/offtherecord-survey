@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* font */
+@import "@fontsource/pretendard/400.css"; /* Regular */
+@import "@fontsource/pretendard/500.css"; /* Medium */
+@import "@fontsource/pretendard/700.css"; /* Bold */
+
 @font-face {
   font-family: "Meetme";
   src: url("/fonts/meetme.ttf") format("truetype");
@@ -10,5 +15,5 @@
 }
 
 body {
-  font-family: "Pretendard", sans-serif;
+  @apply font-sans;
 }

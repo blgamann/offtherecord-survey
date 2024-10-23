@@ -57,7 +57,7 @@ function TraitsPage({ params }) {
 
   const handleDownload = (key, title) => {
     if (isSafari()) {
-      alert("이미지를 길게 눌러 저장하세요.");
+      alert("화면에 나올 이미지를 길게 눌러 저장하세요.");
       window.open(`/download-${key}.png`, "_blank");
     } else {
       const link = document.createElement("a");
@@ -134,17 +134,17 @@ function TraitsPage({ params }) {
   };
 
   const bgImages = {
-    1: "/result-bg-5.png",
-    2: "/result-bg-5.png",
-    3: "/result-bg-5.png",
-    4: "/result-bg-5.png",
+    1: "/result-bg-1.png",
+    2: "/result-bg-2.png",
+    3: "/result-bg-3.png",
+    4: "/result-bg-4.png",
     5: "/result-bg-5.png",
   };
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen pt-[60px]"
-      style={{ backgroundColor: bgColors[trait.key] }}
+      className="flex flex-col items-center justify-center min-h-screen pt-[60px] bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${bgImages[trait.key]})` }}
     >
       <div className="h-[304px] flex flex-col items-center justify-center">
         <Image
@@ -309,6 +309,10 @@ function TraitsPage({ params }) {
         <div className="text-black text-center text-base font-medium leading-[183%] pb-[40px] whitespace-pre-line">
           {trait.howIGetAlongWith}
         </div>
+      </div>
+
+      <div className="text-black text-center text-[13px] font-medium leading-[154%] whitespace-pre-line my-3">
+        {trait.summary}
       </div>
 
       <div className="flex w-[340px] justify-between mt-[30px] mb-[75px] px-[16px]">
