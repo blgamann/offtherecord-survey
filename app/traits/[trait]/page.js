@@ -84,18 +84,19 @@ function TraitsPage({ params }) {
       content: {
         title: trait.title,
         description: trait.feature,
-        imageUrl: `https://offtherecord-survey.vercel.app/download-${trait.key}.svg`,
+        // imageUrl: `https://offtherecord.nicetomeetme.co.kr/download-${trait.key}.svg`,
+        imageUrl: `https://offtherecord.nicetomeetme.co.kr/kakao-image-1.png`,
         link: {
-          mobileWebUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
-          webUrl: `https://offtherecord-survey.vercel.app/traits/${trait.slug}`,
+          mobileWebUrl: `https://offtherecord.nicetomeetme.co.kr/traits/${trait.slug}`,
+          webUrl: `https://offtherecord.nicetomeetme.co.kr/traits/${trait.slug}`,
         },
       },
       // buttons: [
       //   {
       //     title: "설문 시작하기",
       //     link: {
-      //       mobileWebUrl: "https://offtherecord-survey.vercel.app",
-      //       webUrl: "https://offtherecord-survey.vercel.app",
+      //       mobileWebUrl: "https://offtherecord.nicetomeetme.co.kr",
+      //       webUrl: "https://offtherecord.nicetomeetme.co.kr",
       //     },
       //   },
       // ],
