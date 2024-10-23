@@ -12,6 +12,7 @@ module.exports = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
+        sans: ["Pretendard", "sans-serif"],
         meetme: ["Meetme", "sans-serif"],
       },
     },
