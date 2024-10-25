@@ -84,7 +84,7 @@ function TraitsPage({ params }) {
       content: {
         title: `${trait.subtitle} ${trait.title}`,
         description: trait.ogDescription,
-        imageUrl: `https://offtherecord.nicetomeetme.kr/og-${trait.key}.png`,
+        imageUrl: `https://offtherecord.nicetomeetme.kr/kakao-${trait.key}.png`,
         link: {
           mobileWebUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
           webUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
