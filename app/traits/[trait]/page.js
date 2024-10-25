@@ -84,19 +84,19 @@ function TraitsPage({ params }) {
       content: {
         title: trait.title,
         description: trait.feature,
-        // imageUrl: `https://offtherecord.nicetomeetme.co.kr/download-${trait.key}.svg`,
-        imageUrl: `https://offtherecord.nicetomeetme.co.kr/kakao-image-1.png`,
+        // imageUrl: `https://offtherecord.nicetomeetme.kr/download-${trait.key}.svg`,
+        imageUrl: `https://offtherecord.nicetomeetme.kr/kakao-image-1.png`,
         link: {
-          mobileWebUrl: `https://offtherecord.nicetomeetme.co.kr/traits/${trait.slug}`,
-          webUrl: `https://offtherecord.nicetomeetme.co.kr/traits/${trait.slug}`,
+          mobileWebUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
+          webUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
         },
       },
       // buttons: [
       //   {
       //     title: "설문 시작하기",
       //     link: {
-      //       mobileWebUrl: "https://offtherecord.nicetomeetme.co.kr",
-      //       webUrl: "https://offtherecord.nicetomeetme.co.kr",
+      //       mobileWebUrl: "https://offtherecord.nicetomeetme.kr",
+      //       webUrl: "https://offtherecord.nicetomeetme.kr",
       //     },
       //   },
       // ],
