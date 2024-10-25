@@ -82,10 +82,9 @@ function TraitsPage({ params }) {
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: trait.title,
-        description: trait.feature,
-        // imageUrl: `https://offtherecord.nicetomeetme.kr/download-${trait.key}.svg`,
-        imageUrl: `https://offtherecord.nicetomeetme.kr/kakao-image-1.png`,
+        title: `${trait.subtitle} ${trait.title}`,
+        description: trait.ogDescription,
+        imageUrl: `https://offtherecord.nicetomeetme.kr/og-${trait.key}.png`,
         link: {
           mobileWebUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
           webUrl: `https://offtherecord.nicetomeetme.kr/traits/${trait.slug}`,
