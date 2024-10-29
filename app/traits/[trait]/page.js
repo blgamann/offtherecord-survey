@@ -217,7 +217,7 @@ function TraitsPage({ params }) {
         {trait.whispers.map((whisper, index) => (
           <div
             key={index}
-            className="text-black text-center text-base font-medium leading-[183%]"
+            className="text-black text-center text-base font-medium leading-[183%] whitespace-pre-line"
           >
             "{whisper}"
           </div>
